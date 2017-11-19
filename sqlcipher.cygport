@@ -1,0 +1,28 @@
+NAME="sqlcipher"
+VERSION=3.4.1
+RELEASE=1
+CATEGORY="Libs"
+SUMMARY="SQLite database encryption library"
+DESCRIPTION="SQLCipher extends the SQLite database library to add security
+enhancements that make it more suitable for encrypted local data storage such
+as on-the-fly encryption, tamper evidence, and key derivation."
+HOMEPAGE="https://www.zetetic.net/sqlcipher/"
+SRC_URI="http://github.com/sqlcipher/sqlcipher/archive/v${VERSION}/sqlcipher-v${VERSION}.tar.gz"
+PATCH_URI="3.4.1-cygwin-build.patch"
+
+PKG_NAMES="${NAME} lib${NAME}0 lib${NAME}-devel"
+sqlcipher_CATEGORY="Database"
+sqlcipher_SUMMARY=${SUMMARY/library/utility}
+sqlcipher_CONTENTS="
+	usr/bin/sqlcipher.exe
+	usr/share/doc/
+"
+libsqlcipher0_CONTENTS="usr/bin/cygsqlcipher-0.dll"
+libsqlcipher_devel_CONTENTS="
+	usr/include/sqlcipher/
+	usr/lib/libsqlcipher.dll.a
+	usr/lib/pkgconfig/sqlcipher.pc
+"
+
+CFLAGS+=" -DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2"
+CYGCONF_ARGS="--enable-tempstore=yes --disable-tcl"
